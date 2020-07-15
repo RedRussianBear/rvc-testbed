@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>RVC Testbed</title>
+</head>
+<body style="margin: 0; padding: 0; background-image: url('Servo-U DeWarped.jpg'); background-repeat: no-repeat; background-size: cover;">
+
+<div style="width: 100%; height: 100vh; margin: 0; padding: 0;" onclick="showCoords(event)">
+
+</div>
+
+<script>
+    function showCoords(event) {
+        var x = event.clientX;
+        var y = event.clientY;
+        var coords = x + ", " + y;
+        console.log(coords);
+    }
+</script>
+
+</body>
+</html>
