@@ -6,16 +6,181 @@
 </head>
 <body style="margin: 0; padding: 0; background-image: url('Servo-U DeWarped.jpg'); background-repeat: no-repeat; background-size: cover;">
 
-<div style="width: 100%; height: 100vh; margin: 0; padding: 0;" onclick="showCoords(event)">
+<div style="width: 100%; height: 100vh; margin: 0; padding: 0; font-family: sans-serif;" onclick="showCoords(event)">
+
+
+    <div id="alarm"
+         style="display: none; width: 25vw; height: 80vh; border: 2px solid lightgray; border-radius: 2vh; background-color: darkgray; position: fixed; left: 37.5vw; top: 20vh;">
+
+        <div id="alarm-col" style="display: flex; position:relative; left: 8vw; top: 2vh; flex-direction: column;">
+
+            <div id="alarm-top-ind"
+                 style="width: 9vw; height: 6vh; border: 2px solid darkgray; border-radius: 2vh; background-color: black; color:lightgray; font-size: 48pt; text-align: center; font-weight: bold;">
+                77
+            </div>
+
+            <div id="alarm-row" style="display: flex; flex-direction: row;">
+                <div
+                        style="width: 3vw; height: 30vh; border: 2px solid darkgray; border-radius: 2vh; background-color: black; color:white; font-size: 48pt; text-align: center; font-weight: bold;">
+
+                </div>
+                <div
+                        style="width: 6vw; height: 30vh; border: 2px solid darkgray; border-radius: 2vh; background-color: black; color:white; font-size: 48pt; text-align: center; font-weight: bold;">
+
+                </div>
+            </div>
+
+            <div id="alarm-bot-ind"
+                 style="width: 9vw; height: 6vh; border: 2px solid darkgray; border-radius: 2vh; background-color: red; color:white; font-size: 48pt; text-align: center; font-weight: bold;">
+                5
+            </div>
+        </div>
+
+        <div id="alarm-bot-row" style="display: flex; position: relative; top: 22vh;">
+            <div id="alarm-dec" onclick="decRR(event)"
+                 style="width: 8vw; height: 10vh; border: 2px solid darkgray; border-radius: 2vh; background-color: black; color:white; font-size: 48pt; text-align: center; font-weight: bold;">
+                -
+            </div>
+            <div id="alarm-inc" onclick="incRR(event)"
+                 style="width: 8vw; height: 10vh; border: 2px solid darkgray; border-radius: 2vh; background-color: black; color:white; font-size: 48pt; text-align: center;font-weight: bold;">
+                +
+            </div>
+            <div id="alarm-acc" onclick="closeRR(event)"
+                 style="width: 8vw; height: 10vh; border: 2px solid green; border-radius: 2vh; background-color: black; color:green; font-size: 48pt; text-align: center;font-weight: bold;">
+                ✔
+            </div>
+        </div>
+    </div>
+
+
+    <div id="o2"
+         style="display: none; align-items: center; width: 40vw; height: 20vh; border: 2px solid lightgray; border-radius: 2vh; background-color: darkgray; position: fixed; right: 10vw; bottom: 0;">
+
+        <div id="o2-bot-ind"
+             style="width: 9vw; height: 10vh;  background-color: none; color:white; font-size: 48pt; text-align: center; font-weight: bold;">
+            21
+        </div>
+
+        <div id="o2-dec" onclick="decO2(event)"
+             style="width: 10vw; height: 10vh; border: 2px solid green; border-radius: 2vh; background-color: black; color:white; font-size: 48pt; text-align: center; font-weight: bold;">
+            -
+        </div>
+        <div id="o2-inc" onclick="incO2(event)"
+             style="width: 10vw; height: 10vh; border: 2px solid green; border-radius: 2vh; background-color: black; color:white; font-size: 48pt; text-align: center;font-weight: bold;">
+            +
+        </div>
+        <div id="o2-acc" onclick="closeO2(event)"
+             style="width: 8vw; height: 10vh; border: 2px solid green; border-radius: 2vh; background-color: black; color:green; font-size: 48pt; text-align: center;font-weight: bold;">
+            ✔
+        </div>
+    </div>
+
+    <div id="boost" style="position: fixed; left: 0; bottom: 0; width: 100px; height: 70px;"
+         onmousedown="boostdown(event)" onmouseup="boostup(event)">
+
+    </div>
+
+    <div id="boost-disp"
+         style="display: none; color: white; align-items: center; width: 25vw; height: 10vh; border: 2px solid lightgray; background-color: darkgray; position: fixed; left:0; bottom: 0;">
+        <div id="boost-x" style="font-size: 48pt; color: red; font-weight: bold; padding-left: 2vw; padding-right: 2vw;"
+             onclick="closeboost(event)">
+            x
+        </div>
+        <div style="display: flex; flex-direction: column; font-size: 20pt;">
+            <div>
+                O2 Boost Active
+            </div>
+            <div style="display: flex; flex-direction: row; justify-content: space-between; font-size: 30pt;">
+                <div>
+                    100%
+                </div>
+                <div>
+                    0:10
+                </div>
+            </div>
+        </div>
+
+    </div>
 
 </div>
 
 <script>
+    //rr alarm mitigation
+    let RR_bott = 5;
+
+    function incRR(event) {
+        RR_bott += 1;
+        document.getElementById("alarm-bot-ind").innerHTML = RR_bott;
+        if (RR_bott < 3)
+            document.getElementById("alarm-bot-ind").style.backgroundColor = "black";
+        else
+            document.getElementById("alarm-bot-ind").style.backgroundColor = "red";
+    }
+
+    function decRR(event) {
+        RR_bott -= 1;
+        document.getElementById("alarm-bot-ind").innerHTML = RR_bott;
+        if (RR_bott < 3)
+            document.getElementById("alarm-bot-ind").style.backgroundColor = "black";
+        else
+            document.getElementById("alarm-bot-ind").style.backgroundColor = "red";
+    }
+
+    function closeRR(event) {
+        document.getElementById("alarm").style.display = "none";
+    }
+
+    //o2 setting adjust
+    let O2_conc = 21;
+
+    function incO2(event) {
+        O2_conc += 1;
+        document.getElementById("o2-bot-ind").innerHTML = O2_conc;
+    }
+
+    function decO2(event) {
+        O2_conc -= 1;
+        document.getElementById("o2-bot-ind").innerHTML = O2_conc;
+    }
+
+    function closeO2(event) {
+        document.getElementById("o2").style.display = "none";
+    }
+
+    // o2 boost
+    let down = false;
+
+    function boostdown(event) {
+        down = true;
+        setTimeout(boostactive, 1000);
+    }
+
+    function boostup(event) {
+        down = false;
+    }
+
+    function closeboost(event) {
+        document.getElementById("boost-disp").style.display = "none";
+    }
+
+    function boostactive() {
+        if (down)
+            document.getElementById("boost-disp").style.display = "flex";
+    }
+
     function showCoords(event) {
         var x = event.clientX;
         var y = event.clientY;
         var coords = x + ", " + y;
         console.log(coords);
+
+        if (x > 636 && y > 215 && y < 340 && x < 764) {
+            document.getElementById("alarm").style.display = "block";
+        }
+
+        if (x > 230 && y > 608 && y < 675 && x < 305) {
+            document.getElementById("o2").style.display = "flex";
+        }
     }
 </script>
 
